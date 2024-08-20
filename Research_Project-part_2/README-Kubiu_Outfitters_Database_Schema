@@ -1,0 +1,86 @@
+### Kubiu Outfitters Database Schema
+
+Welcome to the Kubiu Outfitters project! This README provides an overview of the database schema used in the project. It outlines the purpose and structure of each table, their relationships, and any special considerations. This documentation will assist future developers in understanding the database design and making necessary modifications.
+
+### Project Overview
+Kubiu Outfitters is a professional tailoring business with a website that includes features such as service listings, a portfolio gallery, blog posts, testimonials, FAQs, and a contact form. The database schema is designed to support these features and facilitate efficient management and retrieval of data.
+
+### Database Tables
+1. users
+Purpose: Stores information about authorized users, such as admins who can manage content.
+![Alt text](image.png)
+Notes:
+deleted_at column is used for soft deletion, allowing users to be marked as deleted without removing their records.
+
+2. testimonials
+Purpose: Stores customer testimonials about the services.
+
+![Alt text](image-1.png)
+Notes:
+The user_id can be NULL to allow testimonials to remain even if the user's account is deleted.
+
+3. contacts
+Purpose: Stores messages submitted via the contact form.
+
+![Alt text](image-2.png)
+Notes:
+The user_id can be NULL to allow messages to be submitted without associating them with a user.
+
+4. faq
+Purpose: Stores frequently asked questions and their answers.
+
+![Alt text](image-3.png)
+
+5. about_us
+Purpose: Stores information about the company or organization.
+
+![Alt text](image-4.png)
+
+6. blog_posts
+Purpose: Stores blog posts published on the website.
+
+![Alt text](image-5.png)
+
+7. services
+Purpose: Stores details of services offered by Kubiu Outfitters.
+
+![Alt text](image-6.png)
+
+8. portfolio
+Purpose: Stores details of completed projects or items in the portfolio gallery.
+
+![Alt text](image-7.png)
+
+### Relationships
+Users Table: Central to managing authenticated users who can access or modify content.
+Testimonials Table: Linked to users via user_id. Testimonials remain even if the user is deleted.
+Contacts Table: Linked to users via user_id but retains contact messages even if the user is deleted.
+Blog Posts, Services, and Portfolio Tables: Each table includes a created_by field to link entries to the user who created them.
+FAQs and About Us Tables: Not linked to users but essential for displaying FAQs and company information.
+
+### Soft Delete Mechanism
+The deleted_at column in the users table allows for soft deletion, ensuring user records are not permanently removed.
+Testimonials and contacts can remain in the database even if their associated user accounts are deleted.
+
+### Future Considerations
+Ensure that application logic correctly handles the soft delete mechanism.
+Maintain data integrity by ensuring that deletion operations do not violate foreign key constraints.
+Regularly review and update the schema as the project evolves.
+
+### Getting Started
+Clone the Repository:
+
+git clone https://github.com/your-username/kubiu-outfitters.git
+cd kubiu-outfitters
+
+### Set Up the Database:
+Follow the instructions in the project's setup guide to configure the database and apply migrations.
+
+### Start the Development Server:
+
+python manage.py runserver
+
+### Access the Application:
+Open your web browser and navigate to http://localhost:8000 to view the application.
+
+For more information on how to contribute to the project, please refer to the project's CONTRIBUTING.md file.

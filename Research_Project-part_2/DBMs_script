@@ -1,0 +1,80 @@
+/**
+ *This script automates the creation of tables and relationships for the database schema
+ *I am using PostgreSQL as my database manager
+ */
+
+Table users {
+  id int [pk, increment]  // Primary key
+  first_name varchar(255)
+  last_name varchar(255)
+  email varchar(255) [unique]
+  password varchar(255)
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  updated_at timestamp [default: 'now()']  // Default to current timestamp
+  deleted_at timestamp [default: null]  // Soft delete column
+}
+
+Table testimonials {
+  id int [pk, increment]  // Primary key
+  user_id int [ref: > users.id, null]  // Foreign key referencing users.id, allows NULL to retain testimonial if user is deleted
+  content text
+  rating int
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  updated_at timestamp [default: 'now()']  // Default to current timestamp
+}
+
+Table contacts {
+  id int [pk, increment]  // Primary key
+  user_id int [ref: > users.id, null]  // Foreign key referencing users.id, allows NULL to retain contact if user is deleted
+  message text
+  email varchar(255)
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  updated_at timestamp [default: 'now()']  // Default to current timestamp
+}
+
+Table faq {
+  id int [pk, increment]  // Primary key
+  question text
+  answer text
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  updated_at timestamp [default: 'now()']  // Default to current timestamp
+}
+
+Table about_us {
+  id int [pk, increment]  // Primary key
+  title varchar(255)
+  description text
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  updated_at timestamp [default: 'now()']  // Default to current timestamp
+}
+
+Table blog_posts {
+  id int [pk, increment]  // Primary key
+  title varchar(255) [not null]
+  content text [not null]
+  summary varchar(255)
+  author_id int [ref: > users.id, not null]  // Foreign key referencing users.id
+  published_at timestamp [default: null]
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  updated_at timestamp [default: 'now()']  // Default to current timestamp
+}
+
+Table services {
+  id int [pk, increment]  // Primary key
+  title varchar(255) [not null]
+  description text [not null]
+  price decimal(10, 2) [not null]
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  updated_at timestamp [default: 'now()']  // Default to current timestamp
+  created_by int [ref: > users.id, not null]  // Foreign key referencing users.id
+}
+
+Table portfolio {
+  id int [pk, increment]  // Primary key
+  title varchar(255) [not null]
+  description text
+  image_url varchar(255) [not null]
+  category varchar(255)  // Example: 'suits', 'dresses'
+  created_at timestamp [default: 'now()']  // Default to current timestamp
+  created_by int [ref: > users.id, not null]  // Foreign key referencing users.id
+}
