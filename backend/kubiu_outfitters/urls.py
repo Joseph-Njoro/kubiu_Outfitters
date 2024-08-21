@@ -38,4 +38,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('management_apps.urls')),  # URLs from the management_apps app
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('accounts/', include('allauth.urls')),
 ]
