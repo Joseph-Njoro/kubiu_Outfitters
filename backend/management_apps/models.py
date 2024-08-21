@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.core.validators import MinValueValidator, MaxValueValidator
+
 class CustomUser(AbstractUser):
     """
     CustomUser model that extends the default Django user model.
@@ -18,7 +19,7 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
-        return self.email
+        return f"{self.username} ({self.email})"
 
     # Specify related_name to avoid clashes
     groups = models.ManyToManyField(
@@ -33,10 +34,7 @@ class CustomUser(AbstractUser):
         blank=True,
         help_text='Specific permissions for this user.'
     )
-
-    def __str__(self):
-        return f"{self.username} ({self.email})"
-
+    
 class Testimonial(models.Model):
     """
     Testimonial model to store user testimonials.
