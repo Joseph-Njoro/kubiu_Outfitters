@@ -1,0 +1,11 @@
+# Environment variable file
+.env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Django migration files
+*/migrations/*
+
