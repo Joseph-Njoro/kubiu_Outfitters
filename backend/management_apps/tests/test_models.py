@@ -1,6 +1,6 @@
 from django.test import TestCase
-from .models import CustomUser, Testimonial, Contact, FAQ, AboutUs, BlogPost, Service, Portfolio, Booking
 from django.utils import timezone
+from management_apps.models import CustomUser, BlogPost, Service, Testimonial, Contact, FAQ, AboutUs, Portfolio, Booking
 
 class CustomUserModelTest(TestCase):
     def setUp(self):

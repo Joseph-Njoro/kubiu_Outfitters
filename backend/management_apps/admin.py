@@ -36,13 +36,13 @@ class CustomUserAdmin(BaseUserAdmin):
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ('user', 'rating', 'created_at')
-    search_fields = ('user__email', 'rating')
+    list_display = ('user', 'content', 'rating', 'created_at')  # Added 'content' to list_display
+    search_fields = ('user__email', 'content', 'rating')  # Ensure 'content' is searchable
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('email', 'created_at')
-    search_fields = ('email', 'message')
+    list_display = ('email', 'message', 'created_at')  # Added 'message' to list_display
+    search_fields = ('email', 'message')  # Ensure 'message' is searchable
 
 @admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
@@ -51,8 +51,8 @@ class FAQAdmin(admin.ModelAdmin):
 
 @admin.register(AboutUs)
 class AboutUsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')
-    search_fields = ('title',)
+    list_display = ('title', 'description', 'created_at')  # Added 'description' to list_display
+    search_fields = ('title', 'description')  # Added 'description' to search_fields
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
