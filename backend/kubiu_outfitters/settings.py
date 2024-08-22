@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 
-from decouple import config
-
 # Example test
 print("SECRET_KEY:", config('SECRET_KEY'))
 print("DATABASE_NAME:", config('DATABASE_NAME'))
@@ -96,7 +94,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DATABASE_NAME', default='kubiu_outfitters_db'),
-        'USER': config('DATABASE_USER', default='ramoz'),
+        'USER': config('DATABASE_USER', default='kubiu_user'),
         'PASSWORD': config('DATABASE_PASSWORD', default='your_default_password'),
         'HOST': config('DATABASE_HOST', default='localhost'),
         'PORT': config('DATABASE_PORT', default='5432'),
