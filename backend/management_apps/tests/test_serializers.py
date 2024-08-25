@@ -78,7 +78,9 @@ class ServiceSerializerTest(APITestCase):
         if serializer.is_valid():
             service = serializer.save()
         else:
-            print(serializer.errors)  # Print errors for debugging
+            # Uncomment this line to print errors for debugging if the serializer is not valid
+            # print(serializer.errors)
+            self.fail("Serializer is not valid. Errors: {}".format(serializer.errors))
         self.assertTrue(serializer.is_valid())
         self.assertEqual(service.title, data['title'])
         self.assertEqual(service.description, data['description'])
