@@ -1,38 +1,35 @@
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
-from management_apps import views
+from management_apps.views import (
+    BlogPostViewSet, ServiceViewSet, TestimonialViewSet, 
+    ContactViewSet, FAQViewSet, AboutUsViewSet, PortfolioViewSet
+)
 
 class TestUrls(SimpleTestCase):
-    def test_home_url_resolves(self):
-        url = reverse('home')
-        self.assertEqual(resolve(url).func, views.home_view)
-
-    def test_about_url_resolves(self):
-        url = reverse('about')
-        self.assertEqual(resolve(url).func, views.about_view)
-
-    def test_contact_url_resolves(self):
-        url = reverse('contact')
-        self.assertEqual(resolve(url).func, views.contact_view)
+    def test_blog_url_resolves(self):
+        url = reverse('blogposts-list')  # Viewset URL pattern
+        self.assertEqual(resolve(url).view_name, 'blogposts-list')
 
     def test_services_url_resolves(self):
-        url = reverse('services')
-        self.assertEqual(resolve(url).func, views.services_view)
-
-    def test_portfolio_url_resolves(self):
-        url = reverse('portfolio')
-        self.assertEqual(resolve(url).func, views.portfolio_view)
+        url = reverse('services-list')
+        self.assertEqual(resolve(url).view_name, 'services-list')
 
     def test_testimonials_url_resolves(self):
-        url = reverse('testimonials')
-        self.assertEqual(resolve(url).func, views.testimonials_view)
+        url = reverse('testimonials-list')
+        self.assertEqual(resolve(url).view_name, 'testimonials-list')
+
+    def test_contact_url_resolves(self):
+        url = reverse('contacts-list')
+        self.assertEqual(resolve(url).view_name, 'contacts-list')
 
     def test_faq_url_resolves(self):
-        url = reverse('faq')
-        self.assertEqual(resolve(url).func, views.faq_view)
+        url = reverse('faqs-list')
+        self.assertEqual(resolve(url).view_name, 'faqs-list')
 
-    def test_blog_url_resolves(self):
-        url = reverse('blog')
-        self.assertEqual(resolve(url).func, views.blog_view)
+    def test_about_url_resolves(self):
+        url = reverse('aboutus-list')
+        self.assertEqual(resolve(url).view_name, 'aboutus-list')
 
-    # Add more tests as needed for other URLs in your project
+    def test_portfolio_url_resolves(self):
+        url = reverse('portfolio-list')
+        self.assertEqual(resolve(url).view_name, 'portfolio-list')
