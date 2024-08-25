@@ -1,123 +1,68 @@
+from django.test import TestCase, Client
 from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from .models import BlogPost, Service, Testimonial, Contact, FAQ, AboutUs, Portfolio
-from django.contrib.auth import get_user_model
+from management_apps.models import CustomUser, Testimonial, Contact, BlogPost, Service
 
-User = get_user_model()
-
-class BlogPostViewSetTest(APITestCase):
+class TestViews(TestCase):
     def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('blogpost-list')
+        self.client = Client()
+        self.user = CustomUser.objects.create_user(username='testuser', password='12345')
+        self.testimonial = Testimonial.objects.create(author=self.user, content="Great service!")
+        self.contact = Contact.objects.create(name="John Doe", email="john@example.com", message="Hello!")
+        self.blog_post = BlogPost.objects.create(title="New Post", content="This is a new blog post.")
+        self.service = Service.objects.create(name="Tailoring", description="Custom tailoring service")
 
-    def test_list_blogposts(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_home_view_get(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home.html')
 
-    def test_create_blogpost(self):
-        data = {"title": "Test Blog", "content": "This is a test blog content"}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    def test_about_view_get(self):
+        response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'about.html')
 
-class ServiceViewSetTest(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('service-list')
+    def test_contact_view_get(self):
+        response = self.client.get(reverse('contact'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'contact.html')
 
-    def test_list_services(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_contact_view_post(self):
+        response = self.client.post(reverse('contact'), {
+            'name': 'Jane Doe',
+            'email': 'jane@example.com',
+            'message': 'Hi there!'
+        })
+        self.assertEqual(response.status_code, 302)  # Assuming you redirect after POST
 
-    def test_create_service(self):
-        data = {"name": "Test Service", "description": "This is a test service"}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    def test_services_view_get(self):
+        response = self.client.get(reverse('services'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'services.html')
 
-class TestimonialViewSetTest(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('testimonial-list')
+    def test_portfolio_view_get(self):
+        response = self.client.get(reverse('portfolio'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'portfolio.html')
 
-    def test_list_testimonials(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_testimonials_view_get(self):
+        response = self.client.get(reverse('testimonials'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'testimonials.html')
 
-    def test_create_testimonial(self):
-        data = {"author": "John Doe", "content": "This is a test testimonial"}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    def test_faq_view_get(self):
+        response = self.client.get(reverse('faq'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'faq.html')
 
-class ContactViewSetTest(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('contact-list')
+    def test_blog_view_get(self):
+        response = self.client.get(reverse('blog'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog.html')
 
-    def test_list_contacts(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_blog_post_view(self):
+        response = self.client.get(reverse('blog_detail', args=[self.blog_post.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog_detail.html')
+        self.assertContains(response, self.blog_post.title)
 
-    def test_create_contact(self):
-        data = {"name": "John Doe", "email": "johndoe@example.com", "message": "This is a test contact"}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-class FAQViewSetTest(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('faq-list')
-
-    def test_list_faqs(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_create_faq(self):
-        data = {"question": "What is this?", "answer": "This is a test FAQ"}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-class AboutUsViewSetTest(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('aboutus-list')
-
-    def test_list_aboutus(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_create_aboutus(self):
-        data = {"description": "This is about us"}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-class PortfolioViewSetTest(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('portfolio-list')
-
-    def test_list_portfolios(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_create_portfolio(self):
-        data = {"title": "Test Portfolio", "description": "This is a test portfolio"}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-class CustomLoginViewTest(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('custom-login')
-        self.user = User.objects.create_user(email='testuser@example.com', password='testpass123')
-
-    def test_login_success(self):
-        data = {'email': 'testuser@example.com', 'password': 'testpass123'}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('message', response.data)
-
-    def test_login_failure(self):
-        data = {'email': 'wronguser@example.com', 'password': 'wrongpass123'}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('error', response.data)
+    # Add more tests as needed for other views in your project

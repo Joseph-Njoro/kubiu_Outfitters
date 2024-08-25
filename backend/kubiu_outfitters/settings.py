@@ -162,7 +162,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Social authentication configuration
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',  # Default backend
+    'django.contrib.auth.backends.ModelBackend',  # Default backend for admin purposes
     'allauth.account.auth_backends.AuthenticationBackend',  # Add this for Django Allauth
     'management_apps.authentication_backend.EmailBackend',  # Custom backend for email login
 )
