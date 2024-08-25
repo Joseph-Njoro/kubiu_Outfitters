@@ -8,6 +8,8 @@ class CustomUser(AbstractUser):
     CustomUser model that extends the default Django user model.
     Additional fields can be added as needed.
     """
+    username = None # Override the default username field with a blank or null value
+
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)

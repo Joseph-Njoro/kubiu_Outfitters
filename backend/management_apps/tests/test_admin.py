@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import Client, TestCase
 from django.contrib import admin
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -7,19 +7,22 @@ from management_apps.models import CustomUser, Testimonial, Contact, FAQ, AboutU
 from management_apps.admin import CustomUserAdmin, TestimonialAdmin, ContactAdmin, FAQAdmin, AboutUsAdmin, BlogPostAdmin, ServiceAdmin, PortfolioAdmin
 
 class AdminSiteTests(TestCase):
-
     def setUp(self):
-        # Create a superuser to access the admin site
-        self.admin_user = get_user_model().objects.create_superuser(
-            username='admin',
-            email='admin@example.com',
-            password='testpass123'
-        )
-        self.client.force_login(self.admin_user)
+        self.client = Client()
 
-        # Create a regular user
+        # Ensure the email used for the superuser is unique and not already in the database
+        get_user_model().objects.filter(email='admin@example.com').delete()
+        self.superuser = get_user_model().objects.create_superuser(
+            email='admin@example.com',
+            first_name='Admin',
+            last_name='User',
+            password='password'
+        )
+        self.client.force_login(self.superuser)
+
+        # Ensure the email used for the regular user is unique and not already in the database
+        get_user_model().objects.filter(email='user@example.com').delete()
         self.user = get_user_model().objects.create_user(
-            username='user',
             email='user@example.com',
             password='testpass123',
             first_name='John',
