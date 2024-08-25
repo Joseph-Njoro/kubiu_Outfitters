@@ -1,7 +1,6 @@
 from decimal import Decimal
-from rest_framework import serializers
 from rest_framework.test import APITestCase
-from management_apps.models import BlogPost,CustomUser, Service, Testimonial, Contact, FAQ, AboutUs, Portfolio
+from management_apps.models import BlogPost, CustomUser, Service, Testimonial, Contact, FAQ, AboutUs, Portfolio
 from management_apps.serializers import (
     BlogPostSerializer, ServiceSerializer, TestimonialSerializer, 
     ContactSerializer, FAQSerializer, AboutUsSerializer, PortfolioSerializer
@@ -9,7 +8,12 @@ from management_apps.serializers import (
 
 class BlogPostSerializerTest(APITestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='testuser', password='testpass')
+        self.user = CustomUser.objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='testpass'
+        )
 
     def test_blogpost_serialization(self):
         blogpost = BlogPost.objects.create(
@@ -41,7 +45,12 @@ class BlogPostSerializerTest(APITestCase):
 
 class ServiceSerializerTest(APITestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='testuser', password='testpass')
+        self.user = CustomUser.objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='testpass'
+        )
 
     def test_service_serialization(self):
         service = Service.objects.create(
@@ -66,10 +75,11 @@ class ServiceSerializerTest(APITestCase):
             "created_by": self.user.id
         }
         serializer = ServiceSerializer(data=data)
-        is_valid = serializer.is_valid()  # Validate the serializer data
-        print(serializer.errors)  # Print errors if any after validation
-        self.assertTrue(is_valid)  # Check if the serializer is valid
-        service = serializer.save()
+        if serializer.is_valid():
+            service = serializer.save()
+        else:
+            print(serializer.errors)  # Print errors for debugging
+        self.assertTrue(serializer.is_valid())
         self.assertEqual(service.title, data['title'])
         self.assertEqual(service.description, data['description'])
         self.assertEqual(service.price, Decimal(data['price']))
@@ -77,7 +87,12 @@ class ServiceSerializerTest(APITestCase):
 
 class TestimonialSerializerTest(APITestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='testuser', password='testpass')
+        self.user = CustomUser.objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='testpass'
+        )
 
     def test_testimonial_serialization(self):
         testimonial = Testimonial.objects.create(
@@ -109,7 +124,12 @@ class TestimonialSerializerTest(APITestCase):
 
 class ContactSerializerTest(APITestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='testuser', password='testpass')
+        self.user = CustomUser.objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='testpass'
+        )
 
     def test_contact_serialization(self):
         contact = Contact.objects.create(user=self.user, email="johndoe@example.com", message="This is a test contact")
@@ -132,24 +152,6 @@ class ContactSerializerTest(APITestCase):
         self.assertEqual(contact.user, self.user)
         self.assertEqual(contact.email, data['email'])
         self.assertEqual(contact.message, data['message'])
-
-    # Example for Service Model Test
-    # Updated Service Model Test
-def test_service_deserialization(self):
-    # Setup test data for the Service model
-    data = {"name": "Test Service", "description": "This is a test service"}
-    # Initialize the serializer with test data
-    serializer = ServiceSerializer(data=data)
-    # Validate the serializer and print errors if any
-    if serializer.is_valid():  # Changed: Added validation check
-        service = serializer.save()  # Changed: Saving the validated data to the model
-    else:
-        print(serializer.errors)  # Print errors if any
-    # Assert the serializer is valid
-    self.assertTrue(serializer.is_valid())
-    # Validate the saved data
-    self.assertEqual(service.name, data['name'])
-    self.assertEqual(service.description, data['description'])
 
 class FAQSerializerTest(APITestCase):
     def test_faq_serialization(self):
@@ -193,27 +195,29 @@ class AboutUsSerializerTest(APITestCase):
 
 class PortfolioSerializerTest(APITestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(username='testuser', password='testpass')
+        self.user = CustomUser.objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='testpass'
+        )
 
-    # Updated Portfolio Model Test
-def test_portfolio_serialization(self):
-    # Setup test data for the Portfolio model (assume portfolio is already defined)
-    serializer = PortfolioSerializer(portfolio)
-    
-    # Validate the serializer and print errors if any
-    if serializer.is_valid():  # Changed: Added validation check
-        data = serializer.data  # Changed: Get the serialized data if valid
-    else:
-        print(serializer.errors)  # Print errors if any
-    
-    # Validate the serialized data
-    self.assertEqual(set(data.keys()), set(['id', 'title', 'description', 'image_url', 'category', 'created_at', 'updated_at', 'created_by']))
-    self.assertEqual(data['title'], portfolio.title)
-    self.assertEqual(data['description'], portfolio.description)
-    self.assertEqual(data['image_url'], portfolio.image_url)
-    self.assertEqual(data['category'], portfolio.category)
-    self.assertEqual(data['created_by'], self.user.id)
-
+    def test_portfolio_serialization(self):
+        portfolio = Portfolio.objects.create(
+            title="Test Portfolio",
+            description="This is a test portfolio",
+            image_url="http://example.com/image.jpg",
+            category="Category A",
+            created_by=self.user
+        )
+        serializer = PortfolioSerializer(portfolio)
+        data = serializer.data
+        self.assertEqual(set(data.keys()), set(['id', 'title', 'description', 'image_url', 'category', 'created_at', 'updated_at', 'created_by']))
+        self.assertEqual(data['title'], portfolio.title)
+        self.assertEqual(data['description'], portfolio.description)
+        self.assertEqual(data['image_url'], portfolio.image_url)
+        self.assertEqual(data['category'], portfolio.category)
+        self.assertEqual(data['created_by'], self.user.id)
 
     def test_portfolio_deserialization(self):
         data = {

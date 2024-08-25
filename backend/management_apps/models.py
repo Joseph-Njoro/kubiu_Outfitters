@@ -162,6 +162,7 @@ class Portfolio(models.Model):
     image_url = models.URLField(max_length=255)
     category = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Add this line
     created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='portfolio')
 
     def __str__(self):

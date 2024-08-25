@@ -7,29 +7,29 @@ from management_apps.views import (
 
 class TestUrls(SimpleTestCase):
     def test_blog_url_resolves(self):
-        url = reverse('blogposts-list')  # Viewset URL pattern
-        self.assertEqual(resolve(url).view_name, 'blogposts-list')
+        url = reverse('blogpost-list')  # Updated basename to match 'blogpost'
+        self.assertEqual(resolve(url).view_name, 'blogpost-list')
 
     def test_services_url_resolves(self):
-        url = reverse('services-list')
-        self.assertEqual(resolve(url).view_name, 'services-list')
+        url = reverse('service-list')  # Updated basename to match 'service'
+        self.assertEqual(resolve(url).view_name, 'service-list')
 
     def test_testimonials_url_resolves(self):
-        url = reverse('testimonials-list')
-        self.assertEqual(resolve(url).view_name, 'testimonials-list')
+        url = reverse('testimonial-list')  # Updated basename to match 'testimonial'
+        self.assertEqual(resolve(url).view_name, 'testimonial-list')
 
     def test_contact_url_resolves(self):
-        url = reverse('contacts-list')
-        self.assertEqual(resolve(url).view_name, 'contacts-list')
+        url = reverse('contact-list')  # Updated basename to match 'contact'
+        self.assertEqual(resolve(url).view_name, 'contact-list')
 
     def test_faq_url_resolves(self):
-        url = reverse('faqs-list')
-        self.assertEqual(resolve(url).view_name, 'faqs-list')
+        url = reverse('faq-list')  # Updated basename to match 'faq'
+        self.assertEqual(resolve(url).view_name, 'faq-list')
 
     def test_about_url_resolves(self):
-        url = reverse('aboutus-list')
+        url = reverse('aboutus-list')  # Updated basename to match 'aboutus'
         self.assertEqual(resolve(url).view_name, 'aboutus-list')
 
     def test_portfolio_url_resolves(self):
-        url = reverse('portfolio-list')
+        url = reverse('portfolio-list')  # Updated basename to match 'portfolio'
         self.assertEqual(resolve(url).view_name, 'portfolio-list')

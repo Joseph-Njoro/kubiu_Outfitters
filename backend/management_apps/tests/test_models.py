@@ -4,11 +4,11 @@ from management_apps.models import CustomUser, BlogPost, Service, Testimonial, C
 
 class CustomUserModelTest(TestCase):
     def setUp(self):
+        # Updated to exclude username and use only email and other required fields
         self.user = CustomUser.objects.create_user(
-            username='johndoe',
+            email='johndoe@example.com',
             first_name='John',
             last_name='Doe',
-            email='johndoe@example.com',
             password='testpassword123'
         )
 
@@ -20,11 +20,11 @@ class CustomUserModelTest(TestCase):
 
 class TestimonialModelTest(TestCase):
     def setUp(self):
+        # Updated to exclude username and use only email and other required fields
         self.user = CustomUser.objects.create_user(
-            username='janedoe',
+            email='janedoe@example.com',
             first_name='Jane',
             last_name='Doe',
-            email='janedoe@example.com',
             password='testpassword123'
         )
         self.testimonial = Testimonial.objects.create(
@@ -34,17 +34,17 @@ class TestimonialModelTest(TestCase):
         )
 
     def test_testimonial_creation(self):
-        self.assertEqual(self.testimonial.user.username, 'janedoe')
+        self.assertEqual(self.testimonial.user.email, 'janedoe@example.com')
         self.assertEqual(self.testimonial.content, 'Great service!')
         self.assertEqual(self.testimonial.rating, 5)
 
 class ContactModelTest(TestCase):
     def setUp(self):
+        # Updated to exclude username and use only email and other required fields
         self.user = CustomUser.objects.create_user(
-            username='alice',
+            email='alice@example.com',
             first_name='Alice',
             last_name='Smith',
-            email='alice@example.com',
             password='testpassword123'
         )
         self.contact = Contact.objects.create(
@@ -54,7 +54,7 @@ class ContactModelTest(TestCase):
         )
 
     def test_contact_creation(self):
-        self.assertEqual(self.contact.user.username, 'alice')
+        self.assertEqual(self.contact.user.email, 'alice@example.com')
         self.assertEqual(self.contact.message, 'I need more information about your services.')
         self.assertEqual(self.contact.email, 'alice@example.com')
 
@@ -82,11 +82,11 @@ class AboutUsModelTest(TestCase):
 
 class BlogPostModelTest(TestCase):
     def setUp(self):
+        # Updated to exclude username and use only email and other required fields
         self.user = CustomUser.objects.create_user(
-            username='bob',
+            email='bob@example.com',
             first_name='Bob',
             last_name='Jones',
-            email='bob@example.com',
             password='testpassword123'
         )
         self.blog_post = BlogPost.objects.create(
@@ -98,15 +98,15 @@ class BlogPostModelTest(TestCase):
     def test_blog_post_creation(self):
         self.assertEqual(self.blog_post.title, 'Tailoring Tips')
         self.assertEqual(self.blog_post.content, 'Here are some useful tips for custom tailoring.')
-        self.assertEqual(self.blog_post.author.username, 'bob')
+        self.assertEqual(self.blog_post.author.email, 'bob@example.com')
 
 class ServiceModelTest(TestCase):
     def setUp(self):
+        # Updated to exclude username and use only email and other required fields
         self.user = CustomUser.objects.create_user(
-            username='charlie',
+            email='charlie@example.com',
             first_name='Charlie',
             last_name='Brown',
-            email='charlie@example.com',
             password='testpassword123'
         )
         self.service = Service.objects.create(
@@ -120,15 +120,15 @@ class ServiceModelTest(TestCase):
         self.assertEqual(self.service.title, 'Tailoring')
         self.assertEqual(self.service.description, 'Custom tailoring services')
         self.assertEqual(self.service.price, 100.00)
-        self.assertEqual(self.service.created_by.username, 'charlie')
+        self.assertEqual(self.service.created_by.email, 'charlie@example.com')
 
 class PortfolioModelTest(TestCase):
     def setUp(self):
+        # Updated to exclude username and use only email and other required fields
         self.user = CustomUser.objects.create_user(
-            username='david',
+            email='david@example.com',
             first_name='David',
             last_name='Goliath',
-            email='david@example.com',
             password='testpassword123'
         )
         self.portfolio = Portfolio.objects.create(
@@ -142,15 +142,15 @@ class PortfolioModelTest(TestCase):
         self.assertEqual(self.portfolio.title, 'Wedding Suit')
         self.assertEqual(self.portfolio.description, 'A custom-tailored wedding suit.')
         self.assertEqual(self.portfolio.image_url, 'http://example.com/image.jpg')
-        self.assertEqual(self.portfolio.created_by.username, 'david')
+        self.assertEqual(self.portfolio.created_by.email, 'david@example.com')
 
 class BookingModelTest(TestCase):
     def setUp(self):
+        # Updated to exclude username and use only email and other required fields
         self.user = CustomUser.objects.create_user(
-            username='eve',
+            email='eve@example.com',
             first_name='Eve',
             last_name='Doe',
-            email='eve@example.com',
             password='testpassword123'
         )
         self.service = Service.objects.create(
@@ -166,6 +166,6 @@ class BookingModelTest(TestCase):
         )
 
     def test_booking_creation(self):
-        self.assertEqual(self.booking.user.username, 'eve')
+        self.assertEqual(self.booking.user.email, 'eve@example.com')
         self.assertEqual(self.booking.service.title, 'Suit Fitting')
         self.assertEqual(self.booking.status, Booking.PENDING)
