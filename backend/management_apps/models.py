@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.core.validators import MinValueValidator, MaxValueValidator
+from .managers import CustomUserManager  # Importing the custom user manager
 
 class CustomUser(AbstractUser):
     """
@@ -18,23 +19,25 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
+    objects = CustomUserManager()  # Use the custom user manager
+
     def __str__(self):
-        return f"{self.username} ({self.email})"
+        return f"{self.email}"
 
     # Specify related_name to avoid clashes
     groups = models.ManyToManyField(
         Group,
-        related_name='customuser_set',  # Ensure unique name to avoid clashes
+        related_name='customuser_set',
         blank=True,
         help_text='The groups this user belongs to.'
     )
     user_permissions = models.ManyToManyField(
         Permission,
-        related_name='customuser_set',  # Ensure unique name to avoid clashes
+        related_name='customuser_set',
         blank=True,
         help_text='Specific permissions for this user.'
     )
-    
+
 class Testimonial(models.Model):
     """
     Testimonial model to store user testimonials.

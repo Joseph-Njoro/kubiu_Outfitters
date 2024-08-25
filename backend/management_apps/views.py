@@ -19,6 +19,8 @@ logger = logging.getLogger(__name__)
 class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
+    permission_classes = [AllowAny]  # Allow unrestricted access
+
 
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
@@ -43,6 +45,7 @@ class AboutUsViewSet(viewsets.ModelViewSet):
 class PortfolioViewSet(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioSerializer
+    permission_classes = [AllowAny]
 
 class CustomLoginView(APIView):
     permission_classes = [AllowAny]  # Explicitly allow access to everyone

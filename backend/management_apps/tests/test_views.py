@@ -1,68 +1,152 @@
-from django.test import TestCase, Client
 from django.urls import reverse
-from management_apps.models import CustomUser, Testimonial, Contact, BlogPost, Service
+from django.test import TestCase
+from rest_framework.test import APIClient
+from rest_framework import status
+from django.contrib.auth import get_user_model
+from management_apps.models import (
+    BlogPost, Service, Testimonial, Contact, FAQ, AboutUs, Portfolio
+)
+from management_apps.serializers import (
+    BlogPostSerializer, ServiceSerializer, TestimonialSerializer, 
+    ContactSerializer, FAQSerializer, AboutUsSerializer, PortfolioSerializer
+)
 
-class TestViews(TestCase):
+class BlogPostViewSetTests(TestCase):
     def setUp(self):
-        self.client = Client()
-        self.user = CustomUser.objects.create_user(username='testuser', password='12345')
-        self.testimonial = Testimonial.objects.create(author=self.user, content="Great service!")
-        self.contact = Contact.objects.create(name="John Doe", email="john@example.com", message="Hello!")
-        self.blog_post = BlogPost.objects.create(title="New Post", content="This is a new blog post.")
-        self.service = Service.objects.create(name="Tailoring", description="Custom tailoring service")
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='password123'
+        )
+        self.blog_post = BlogPost.objects.create(
+            title="Sample Blog Post",
+            content="This is a sample blog post.",
+            author=self.user
+        )
+        
+    def test_list_blog_posts(self):
+        url = reverse('blogpost-list')
+        response = self.client.get(url)
+        blog_posts = BlogPost.objects.all()
+        serializer = BlogPostSerializer(blog_posts, many=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Extract the list of blog posts from the paginated response
+        self.assertEqual(response.data['results'], serializer.data)
 
-    def test_home_view_get(self):
-        response = self.client.get(reverse('home'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'home.html')
+    def test_create_blog_post(self):
+        url = reverse('blogpost-list')
+        data = {
+            'title': 'New Blog Post',
+            'content': 'Content of the new blog post.',
+            'author': self.user.id
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(BlogPost.objects.count(), 2)
+        self.assertEqual(BlogPost.objects.get(id=response.data['id']).title, 'New Blog Post')
 
-    def test_about_view_get(self):
-        response = self.client.get(reverse('about'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'about.html')
+    def test_retrieve_blog_post(self):
+        url = reverse('blogpost-detail', args=[self.blog_post.id])
+        response = self.client.get(url)
+        serializer = BlogPostSerializer(self.blog_post)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
 
-    def test_contact_view_get(self):
-        response = self.client.get(reverse('contact'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'contact.html')
+    def test_update_blog_post(self):
+        url = reverse('blogpost-detail', args=[self.blog_post.id])
+        data = {'title': 'Updated Blog Post', 'content': 'Updated content.'}
+        response = self.client.patch(url, data, format='json')
+        self.blog_post.refresh_from_db()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.blog_post.title, 'Updated Blog Post')
 
-    def test_contact_view_post(self):
-        response = self.client.post(reverse('contact'), {
-            'name': 'Jane Doe',
-            'email': 'jane@example.com',
-            'message': 'Hi there!'
-        })
-        self.assertEqual(response.status_code, 302)  # Assuming you redirect after POST
+    def test_delete_blog_post(self):
+        url = reverse('blogpost-detail', args=[self.blog_post.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(BlogPost.objects.count(), 0)
 
-    def test_services_view_get(self):
-        response = self.client.get(reverse('services'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'services.html')
+class PortfolioViewSetTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='password123'
+        )
+        self.portfolio = Portfolio.objects.create(
+            title="Tailoring Portfolio",
+            description="A showcase of our work.",
+            image_url="http://example.com/image.jpg",
+            created_by=self.user
+        )
+    
+    def test_list_portfolios(self):
+        url = reverse('portfolio-list')
+        response = self.client.get(url)
+        portfolios = Portfolio.objects.all()
+        serializer = PortfolioSerializer(portfolios, many=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Extract the list of portfolios from the paginated response
+        self.assertEqual(response.data['results'], serializer.data)
 
-    def test_portfolio_view_get(self):
-        response = self.client.get(reverse('portfolio'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'portfolio.html')
+    def test_create_portfolio(self):
+        url = reverse('portfolio-list')
+        data = {
+            'title': 'New Portfolio',
+            'description': 'New description.',
+            'image_url': 'http://example.com/new_image.jpg',
+            'created_by': self.user.id
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Portfolio.objects.count(), 2)
+        self.assertEqual(Portfolio.objects.get(id=response.data['id']).title, 'New Portfolio')
 
-    def test_testimonials_view_get(self):
-        response = self.client.get(reverse('testimonials'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'testimonials.html')
+    def test_retrieve_portfolio(self):
+        url = reverse('portfolio-detail', args=[self.portfolio.id])
+        response = self.client.get(url)
+        serializer = PortfolioSerializer(self.portfolio)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
 
-    def test_faq_view_get(self):
-        response = self.client.get(reverse('faq'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'faq.html')
+    def test_update_portfolio(self):
+        url = reverse('portfolio-detail', args=[self.portfolio.id])
+        data = {'title': 'Updated Portfolio'}
+        response = self.client.patch(url, data, format='json')
+        self.portfolio.refresh_from_db()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.portfolio.title, 'Updated Portfolio')
 
-    def test_blog_view_get(self):
-        response = self.client.get(reverse('blog'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog.html')
+    def test_delete_portfolio(self):
+        url = reverse('portfolio-detail', args=[self.portfolio.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Portfolio.objects.count(), 0)
 
-    def test_blog_post_view(self):
-        response = self.client.get(reverse('blog_detail', args=[self.blog_post.id]))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog_detail.html')
-        self.assertContains(response, self.blog_post.title)
+class CustomLoginViewTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            email='testuser@example.com',
+            first_name='Test',
+            last_name='User',
+            password='password123'
+        )
 
-    # Add more tests as needed for other views in your project
+    def test_login_success(self):
+        url = reverse('custom-login')
+        data = {'email': 'testuser@example.com', 'password': 'password123'}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, {"message": "Login successful"})
+
+    def test_login_failure(self):
+        url = reverse('custom-login')
+        data = {'email': 'testuser@example.com', 'password': 'wrongpassword'}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, {"error": "Invalid credentials"})
