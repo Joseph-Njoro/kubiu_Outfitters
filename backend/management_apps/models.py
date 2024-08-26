@@ -196,7 +196,8 @@ class Booking(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.service.title} on {self.booking_date}"
+        return f"{self.user.email} - {self.service.title} on {self.booking_date.strftime('%Y-%m-%d %H:%M:%S')}"
+
 
     class Meta:
         indexes = [
