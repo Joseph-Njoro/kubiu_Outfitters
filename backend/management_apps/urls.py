@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     BlogPostViewSet, ServiceViewSet, TestimonialViewSet, ContactViewSet, FAQViewSet,
-    AboutUsViewSet, PortfolioViewSet, CustomLoginView
+    AboutUsViewSet, PortfolioViewSet, CustomLoginView, ProtectedView
 )
 
 # Initialize the router for automatically generating URLs
@@ -23,4 +23,7 @@ urlpatterns = [
 
     # Custom login endpoint
     path('api/login/', CustomLoginView.as_view(), name='custom-login'),
+
+    # Protected endpoint
+    path('api/protected/', ProtectedView.as_view(), name='protected-endpoint'),
 ]
