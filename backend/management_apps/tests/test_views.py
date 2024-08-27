@@ -142,7 +142,8 @@ class CustomLoginViewTests(TestCase):
         data = {'email': 'testuser@example.com', 'password': 'password123'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {"message": "Login successful"})
+        self.assertIn('access', response.data)
+        self.assertIn('refresh', response.data)
 
     def test_login_failure(self):
         url = reverse('custom-login')

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',  # Required for static file handling
     'rest_framework',
+    'rest_framework.authtoken',
     'management_apps',  # Your app containing models, views, etc.
     'drf_yasg',  # Swagger integration for API documentation
     'allauth',
