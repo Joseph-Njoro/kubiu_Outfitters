@@ -2,10 +2,21 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
+from management_apps.models import CustomUser  # Make sure this import matches your actual path
 
 @pytest.mark.django_db
 def test_contact_form_submission():
     client = APIClient()
+    
+    # Create and log in a user with all required fields
+    user = CustomUser.objects.create_user(
+        email='testuser@example.com',
+        first_name='Test',
+        last_name='User',
+        password='testpass'
+    )
+    client.login(username='testuser@example.com', password='testpass')
+    
     contact_data = {
         "name": "Test User",
         "email": "testuser@example.com",
@@ -15,5 +26,4 @@ def test_contact_form_submission():
     # Submit contact form
     response = client.post(reverse('contact-list'), contact_data, format='json')
     assert response.status_code == status.HTTP_201_CREATED
-    # Assuming you have a way to check the contact form submission
-    # For example, you could query the database or use mock objects
+    # Additional assertions can be added here if needed

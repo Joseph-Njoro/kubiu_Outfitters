@@ -32,6 +32,7 @@ class TestimonialViewSet(viewsets.ModelViewSet):
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    permission_classes = [AllowAny]
 
 class FAQViewSet(viewsets.ModelViewSet):
     queryset = FAQ.objects.all()
