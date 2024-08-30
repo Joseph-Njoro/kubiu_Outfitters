@@ -12,7 +12,7 @@ To create a backup of your PostgreSQL database, use the `pg_dump` command. Follo
 2. **Run the Backup Command**: Use the following command to create a backup of your database:
 
    ```bash
-   pg_dump -h localhost -U kubiu_user -d kubiu_outfitters_db -F c -b -v -f backup_filename.backup
+   pg_dump -h localhost -U kubiu_user -d kubiu_outfitters_db -F c -b -v -f Kubiu_outfitters_db.backup
    ```
 
    ### Command Explanation:
