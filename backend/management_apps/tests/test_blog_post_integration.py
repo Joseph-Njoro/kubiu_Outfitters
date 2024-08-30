@@ -7,7 +7,6 @@ from management_apps.models import BlogPost
 
 @pytest.mark.django_db
 def test_blog_post_crud_operations():
-    # Create a user for the blog post
     User = get_user_model()
     user = User.objects.create_user(
         email='testuser@example.com',
@@ -17,7 +16,14 @@ def test_blog_post_crud_operations():
     )
 
     client = APIClient()
-    client.login(email='testuser@example.com', password='testpass')  # Log in the user
+    
+    # Obtain the auth token for the created user
+    response = client.post(reverse('api-token-auth'), {'username': 'testuser@example.com', 'password': 'testpass'}, format='json')
+    assert response.status_code == status.HTTP_200_OK
+    token = response.data['token']
+    
+    # Set the token in the header for authenticated requests
+    client.credentials(HTTP_AUTHORIZATION='Token ' + token)
 
     blog_post_data = {
         "title": "Test Blog Post",
