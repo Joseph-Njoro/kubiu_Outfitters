@@ -1,5 +1,4 @@
 import logging
-
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework import status, viewsets

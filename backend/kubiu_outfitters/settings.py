@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django_extensions',
     'django.contrib.staticfiles',  # Required for static file handling
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework.authtoken',
     'management_apps',  # Your app containing models, views, etc.
     'drf_yasg',  # Swagger integration for API documentation
