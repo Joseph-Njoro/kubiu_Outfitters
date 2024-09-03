@@ -6,7 +6,7 @@ const GalleryCarousel = () => {
     useEffect(() => {
         const fetchGalleryImages = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/api/portfolios/');  // Full URL with the base URL included
+                const response = await fetch('http://127.0.0.1:8000/api/api/portfolios/');
                 if (!response.ok) {
                     throw new Error('Failed to fetch images');
                 }
@@ -25,10 +25,46 @@ const GalleryCarousel = () => {
             <div className="carousel-inner">
                 {images.map((image, index) => (
                     <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-                        <img src={image.image} className="d-block w-100" alt={image.description} />
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>{image.title}</h5>
-                            <p>{image.description}</p>
+                        <img
+                            src={image.image}
+                            className="d-block w-100"
+                            alt={image.description}
+                            style={{ objectFit: 'cover', height: '500px' }} // Ensures images cover the area and have a fixed height
+                        />
+                        <div
+                            className="carousel-caption d-none d-md-block"
+                            style={{
+                                background: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+                                padding: '10px',
+                                borderRadius: '5px',
+                                bottom: '20px',
+                                left: '0',
+                                right: '0',
+                                textAlign: 'center'
+                            }}
+                        >
+                            <h5 style={{ color: '#fff', fontSize: '1.5rem' }}>{image.title}</h5>
+                            <p style={{ color: '#fff', fontSize: '1rem' }}>{image.description}</p>
+                            {/* Display tags if available */}
+                            {image.tags && image.tags.length > 0 && (
+                                <div style={{ marginTop: '10px' }}>
+                                    {image.tags.map((tag, tagIndex) => (
+                                        <span
+                                            key={tagIndex}
+                                            style={{
+                                                backgroundColor: '#007bff',
+                                                color: '#fff',
+                                                padding: '5px 10px',
+                                                borderRadius: '5px',
+                                                marginRight: '5px',
+                                                fontSize: '0.9rem'
+                                            }}
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
