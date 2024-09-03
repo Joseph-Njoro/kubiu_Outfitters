@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'backend', 'media')
 
 # Example test
 print("SECRET_KEY:", config('SECRET_KEY'))
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django_extensions',
+    'corsheaders',  # CORS Headers
     'django.contrib.staticfiles',  # Required for static file handling
     'rest_framework',
     'rest_framework_simplejwt',
@@ -64,12 +70,13 @@ STATICFILES_DIRS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS Headers Middleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware', # Fixes allauth issue
+    'allauth.account.middleware.AccountMiddleware',  # Fixes allauth issue
 ]
 
 ROOT_URLCONF = 'kubiu_outfitters.urls'
@@ -185,3 +192,12 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 SOCIALACCOUNT_QUERY_EMAIL = True
+
+# Add CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins (for development only)
+
+# Or specify allowed origins
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # React dev server
+#     "http://localhost:8000",  # Django backend
+# ]
