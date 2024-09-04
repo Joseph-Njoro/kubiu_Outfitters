@@ -5,6 +5,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogPost
         fields = '__all__'
+        read_only_fields = ['id', 'created_at', 'updated_at']  # Ensure these fields are read-only
 
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
