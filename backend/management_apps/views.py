@@ -1,10 +1,11 @@
 import logging
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.contrib.auth import authenticate
 from rest_framework import status, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.contrib.auth import authenticate
 from .models import BlogPost, Service, Testimonial, Contact, FAQ, AboutUs, Portfolio
 from .serializers import (
     BlogPostSerializer, ServiceSerializer, TestimonialSerializer, 
@@ -37,7 +38,7 @@ class BlogPostViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
-    
+
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
@@ -97,11 +98,14 @@ class CustomLoginView(APIView):
             logger.warning(f"Invalid credentials for email: {email}")
             return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
-
-# The missing 'protected_view' to handle protected routes
 class ProtectedView(APIView):
+    authentication_classes = [JWTAuthentication]  # Ensure JWT authentication is used
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        # Log the email of the user accessing the protected view
         logger.info(f"Protected view accessed by user: {request.user.email}")
-        return Response({"message": "You have access to this protected view!"}, status=status.HTTP_200_OK)
+        return Response(
+            {"message": "You have access to this protected view!"},
+            status=status.HTTP_200_OK
+        )
