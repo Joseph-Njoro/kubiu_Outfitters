@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Sample data for sorting options
@@ -11,8 +12,18 @@ const SORT_OPTIONS = [
 
 const ServiceSection = () => {
   const [testimonials, setTestimonials] = useState({ results: [] });
-  const [services, setServices] = useState({ results: [] }); // New state for services
+  const [services, setServices] = useState({ results: [] });
   const [sortOption, setSortOption] = useState('date_desc');
+  const navigate = useNavigate();  // useNavigate hook for navigation
+
+  // Check for access token and redirect if not logged in
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      // Redirect to login page if there's no token
+      navigate('/login');
+    }
+  }, [navigate]);  // Dependency array includes navigate to avoid unnecessary re-renders
 
   // Fetch testimonials
   useEffect(() => {
