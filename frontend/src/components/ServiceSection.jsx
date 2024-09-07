@@ -1,6 +1,7 @@
 // src/components/ServiceSection.jsx
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
+import authService from '../services/authService'; // Import your auth service
 
 const ServiceSection = () => {
     const [services, setServices] = useState([]);
@@ -8,10 +9,25 @@ const ServiceSection = () => {
     // Fetch services from backend
     const fetchServices = async () => {
         try {
-            const response = await fetch('/api/api/services/');
+            const response = await fetch('http://localhost:8000/api/api/services/', {
+                headers: authService.getAuthHeaders(), // Use authService to get headers
+            });
+
             if (!response.ok) {
+                if (response.status === 401) {
+                    // Handle token refresh logic here
+                    await authService.refreshToken();
+                    // Retry the request after refreshing the token
+                    return fetchServices();
+                }
                 throw new Error('Failed to fetch services');
             }
+
+            const contentType = response.headers.get('Content-Type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Expected JSON response');
+            }
+
             const data = await response.json();
             setServices(data);
         } catch (error) {

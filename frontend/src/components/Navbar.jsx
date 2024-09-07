@@ -1,9 +1,18 @@
 // src/components/Navbar.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import authService from '../services/authService';
 
 const NavbarComponent = () => {
+  const navigate = useNavigate();
+  const user = authService.getCurrentUser();
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -28,6 +37,22 @@ const NavbarComponent = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/blog">Blog Posts</Link>
             </li>
+          </ul>
+          <ul className="navbar-nav ms-auto">
+            {user ? (
+              <>
+                <li className="nav-item">
+                  <span className="navbar-text">Welcome, {user.email}</span>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-outline-danger ms-2" onClick={handleLogout}>Logout</button>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">Login</Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

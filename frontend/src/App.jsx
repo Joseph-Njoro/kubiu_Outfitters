@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavbarComponent from './components/Navbar';
@@ -6,11 +5,12 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import ExampleComponent from './pages/ExampleComponent';
-import LogoutButton from './components/LogoutButton'; // Include logout button
-import BlogPosts from './pages/BlogPosts'; // Import BlogPosts component
-import BlogPostDetail from './pages/BlogPostDetail'; // Import BlogPostDetail component
-import ServiceSection from './pages/ServiceSection'; // Import ServiceSection component
-import LoginPage from './pages/LoginPage'; // Import LoginPage component
+import BlogPosts from './pages/BlogPosts';
+import BlogPostDetail from './pages/BlogPostDetail';
+import ServiceSection from './pages/ServiceSection';
+import LoginPage from './pages/LoginPage';
+import AuthTest from './pages/AuthTest'; // Import AuthTest component
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 const App = () => {
@@ -24,13 +24,19 @@ const App = () => {
           <Route path="/example" element={<ExampleComponent />} />
           <Route path="/blog" element={<BlogPosts />} />
           <Route path="/blog/:id" element={<BlogPostDetail />} />
-          <Route path="/services" element={<ServiceSection />} />
-          <Route path="/login" element={<LoginPage />} /> {/* Add the new route for login */}
-          {/* Define additional routes if needed */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/auth-test" element={<AuthTest />} />
+          <Route 
+            path="/services" 
+            element={
+              <PrivateRoute>
+                <ServiceSection />
+              </PrivateRoute>
+            } 
+          />
         </Routes>
       </div>
       <Footer />
-      <LogoutButton /> {/* Add LogoutButton component */}
     </Router>
   );
 };
