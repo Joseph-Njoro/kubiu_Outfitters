@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom'; // Updated to useNavigate
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Sample data for sorting options
@@ -12,24 +12,20 @@ const SORT_OPTIONS = [
 
 const ServiceSection = () => {
   const [testimonials, setTestimonials] = useState({ results: [] });
-  const [services, setServices] = useState({ results: [] });
+  const [services, setServices] = useState({ results: [] }); 
   const [sortOption, setSortOption] = useState('date_desc');
-  const navigate = useNavigate();  // useNavigate hook for navigation
-
-  // Check for access token and redirect if not logged in
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      // Redirect to login page if there's no token
-      navigate('/login');
-    }
-  }, [navigate]);  // Dependency array includes navigate to avoid unnecessary re-renders
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   // Fetch testimonials
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          navigate('/login'); // Redirect to login if not authenticated
+          return;
+        }
+
         const response = await fetch(`http://localhost:8000/api/api/testimonials/?sort=${sortOption}`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -49,13 +45,18 @@ const ServiceSection = () => {
     };
 
     fetchTestimonials();
-  }, [sortOption]);
+  }, [sortOption, navigate]);
 
   // Fetch services
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          navigate('/login'); // Redirect to login if not authenticated
+          return;
+        }
+
         const response = await fetch('http://localhost:8000/api/api/services/', {
           headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -75,7 +76,7 @@ const ServiceSection = () => {
     };
 
     fetchServices();
-  }, []); // Fetch services on component mount
+  }, [navigate]); // Fetch services on component mount
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
