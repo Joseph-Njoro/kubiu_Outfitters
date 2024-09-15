@@ -1,6 +1,7 @@
 // src/pages/Contact.jsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/Contact.css';
 import contactService from '../services/contactService';
 
 const Contact = () => {

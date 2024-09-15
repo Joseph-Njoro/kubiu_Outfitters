@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import authService from '../services/authService';
+import '../styles/Navbar.css';
 
 const NavbarComponent = () => {
   const navigate = useNavigate();

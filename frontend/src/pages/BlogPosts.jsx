@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import BlogPostCard from '../components/BlogPostCard';
+import '../styles/BlogPosts.css';
 
 const BlogPosts = () => {
     const [posts, setPosts] = useState([]);

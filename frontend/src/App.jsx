@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage';
 import AuthTest from './pages/AuthTest'; // Import AuthTest component
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
+import './styles/custom.css';
 
 const App = () => {
   return (

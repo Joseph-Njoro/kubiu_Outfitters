@@ -1,0 +1,108 @@
+/* Font Imports (if using Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap');
+
+/* Container Styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif; /* Stylish font for general text */
+    background-color: #1f3d61; /* Rich dark blue for a sleek background */
+    color: #f1f2f6; /* Light text color for contrast */
+}
+
+/* Blog Posts Section */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between cards */
+    justify-content: center; /* Center the columns */
+}
+
+/* Blog Post Cards */
+.card {
+    flex: 1 1 calc(50% - 20px); /* Adjusted to 2 columns */
+    max-width: calc(100% - 20px); /* Adjusted for 2 columns */
+    margin-bottom: 20px;
+    border: 1px solid #4b6584; /* Darker border with a bluish tint */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #2c3e50; /* Darker slate gray for card background */
+    font-family: 'Lato', sans-serif; /* Stylish font for cards */
+    color: #f1f2f6; /* Light text for readability */
+}
+
+/* Card Hover Effects */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
+    background-color: #34495e; /* Slightly lighter dark gray on hover */
+}
+
+/* Card Header */
+.card-header {
+    background-color: #27ae60; /* Brighter green header for contrast */
+    padding: 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-bottom: 1px solid #2ecc71;
+    color: #f1f2f6; /* Light text for contrast */
+    font-family: 'Montserrat', sans-serif; /* Stylish font for headers */
+}
+
+/* Card Body */
+.card-body {
+    padding: 15px;
+    font-size: 1rem;
+    color: #dfe4ea; /* Soft off-white text for readability */
+}
+
+.card-body .card-text {
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif; /* Consistent font for card text */
+}
+
+/* No More Posts Message */
+p.no-more-posts {
+    text-align: center;
+    font-size: 1rem;
+    color: #a4b0be; /* Softer gray color for no more posts message */
+    margin-top: 20px;
+    font-family: 'Roboto', sans-serif; /* Consistent font for message */
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #e67e22; /* Bright orange for call-to-action buttons */
+    border: none;
+    border-radius: 5px;
+    color: #f1f2f6; /* Light color text */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: #d35400; /* Darker orange on hover */
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4); /* Add depth on hover */
+}
+
+/* Responsive Design Enhancements */
+@media (max-width: 1200px) {
+    .card {
+        flex: 1 1 calc(50% - 20px); /* Two columns on medium screens */
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex: 1 1 100%; /* Single column on small screens */
+        max-width: 100%;
+    }
+}
