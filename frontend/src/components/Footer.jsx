@@ -1,10 +1,11 @@
 // src/components/Footer.jsx
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/Footer.css';
+import '../styles/Footer.css'; // Link to your custom styles
+
 const Footer = () => {
   return (
-    <footer className="bg-light text-center text-lg-start">
+    <footer className="custom-footer text-center text-lg-start">
       <div className="container p-4">
         <div className="row">
           <div className="col-lg-6 col-md-12 mb-4 mb-md-0">
@@ -22,13 +23,7 @@ const Footer = () => {
                 <a href="/services" className="text-dark">Services</a>
               </li>
               <li>
-                <a href="/portfolio" className="text-dark">Portfolio</a>
-              </li>
-              <li>
                 <a href="/contact" className="text-dark">Contact</a>
-              </li>
-              <li>
-                <a href="/example" className="text-dark">Example</a>
               </li>
               <li>
                 <a href="/blog" className="text-dark">Blog Posts</a>

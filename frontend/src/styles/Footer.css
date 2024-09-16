@@ -1,15 +1,24 @@
 /* src/components/Footer.css */
 
+/* Footer Styling to prevent inheritance of background */
+footer {
+    background-color: #2c3e50; /* Ensure the footer has a different background color */
+    padding: 20px;
+    color: #f1f2f6;
+    text-align: center;
+    border-top: 1px solid #4b6584; /* Add border to separate footer */
+    font-family: 'Roboto', sans-serif;
+}
 /* Footer Container */
 footer {
-  background-color: #2c3e50; /* Dark background for the footer */
+  background-color: #003135; /* Primary color for the footer */
   color: #ecf0f1; /* Light text color for readability */
   padding: 20px 0; /* Padding for spacing */
 }
 
 /* Footer Heading */
 footer h5 {
-  color: #f39c12; /* Bright color for the heading to stand out */
+  color: #0FA4AF; /* Secondary color for the heading */
   font-weight: bold;
   margin-bottom: 15px;
 }
@@ -27,35 +36,5 @@ footer a {
 }
 
 footer a:hover {
-  color: #f39c12; /* Highlight color on hover */
-  text-decoration: underline; /* Add underline on hover for better visibility */
-}
-
-/* Footer List */
-footer ul {
-  padding-left: 0; /* Remove default padding */
-  list-style: none; /* Remove default list styling */
-}
-
-footer ul li {
-  margin-bottom: 10px; /* Space between list items */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  footer {
-    text-align: center; /* Center-align text on smaller screens */
-  }
-
-  footer .container {
-    padding: 20px; /* Adjust padding for smaller screens */
-  }
-
-  footer ul {
-    padding-left: 0; /* Remove padding for smaller screens */
-  }
-
-  footer ul li {
-    margin-bottom: 8px; /* Adjust spacing for smaller screens */
-  }
+  color: #0FA4AF; /* Secondary color for hover */
 }

@@ -3,10 +3,10 @@
   max-width: 400px;
   margin: 100px auto; /* Centering */
   padding: 40px;
-  background-color: #2c3e50; /* Dark blue-gray background for a sleek look */
+  background-color: #003135; /* Primary color for a sleek look */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  color: #ecf0f1; /* Light text color to contrast with the dark background */
+  color: #AFDDE5; /* Light color for contrast */
 }
 
 /* Headings */
@@ -14,14 +14,14 @@ h2 {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 600;
-  color: #ecf0f1; /* Light text color for the heading */
+  color: #0FA4AF; /* Secondary color for headings */
   margin-bottom: 30px;
 }
 
 /* Form labels */
 label {
   font-size: 14px;
-  color: #bdc3c7; /* Soft gray for labels */
+  color: #AFDDE5; /* Light color for labels */
   display: block;
   margin-bottom: 8px;
 }
@@ -33,15 +33,15 @@ input {
   margin-bottom: 20px;
   border: none;
   border-radius: 5px;
-  background-color: #34495e; /* Dark background for input */
-  color: #ecf0f1; /* Light text for readability */
+  background-color: #024950; /* Secondary color for input background */
+  color: #AFDDE5; /* Light color for text */
   font-size: 16px;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 input:focus {
-  background-color: #0056a5; /* Slightly lighter input background on focus */
-  box-shadow: 0 0 5px rgba(76, 157, 178, 0.8); /* Subtle glow effect */
+  background-color: #0FA4AF; /* Secondary color for focus state */
+  box-shadow: 0 0 5px rgba(15, 164, 175, 0.8); /* Subtle glow effect */
   outline: none;
 }
 
@@ -49,10 +49,10 @@ input:focus {
 button {
   width: 100%;
   padding: 12px;
-  background-color: #0b0bdb; /* Blue color for the button */
+  background-color: #964734; /* Accent color for the button */
   border: none;
   border-radius: 5px;
-  color: #ecf0f1; /* Light color text */
+  color: #AFDDE5; /* Light color for text */
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -60,14 +60,13 @@ button {
 }
 
 button:hover {
-  background-color: #1c5987; /* Darker blue on hover */
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); /* Add depth on hover */
+  background-color: #7e3d2c; /* Darker shade of accent color on hover */
+  box-shadow: 0 4px 12px rgba(150, 87, 36, 0.4); /* Add depth on hover */
 }
 
-/* Error Message Styling */
 p {
-  font-size: 14px;
-  color: #e74c3c; /* Red color for error message */
+  font-size: 25px;
+  color: #00ffbb; /* Accent color for error messages */
   text-align: center;
   margin-bottom: 20px;
 }

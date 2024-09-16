@@ -3,12 +3,19 @@
 
 /* Container Styling */
 .container {
-    max-width: 1200px;
+    width: 100%; /* Full width */
+    max-width: 100%; /* Prevent from shrinking */
+    padding: 0; /* Remove padding if it causes overflow */
+    box-sizing: border-box; /* Include padding and border in width calculation */
     margin: 0 auto;
-    padding: 20px;
     font-family: 'Roboto', sans-serif; /* Stylish font for general text */
-    background-color: #1f3d61; /* Rich dark blue for a sleek background */
+    background-image: url('http://127.0.0.1:8000/media/container_background.png');
+    background-size: cover; /* Ensure the image covers the container */
+    background-position: center; /* Center the image in the container */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-color: #1f3d61; /* Fallback dark blue color */
     color: #f1f2f6; /* Light text color for contrast */
+    border-radius: 10px; /* Smooth edges */
 }
 
 /* Blog Posts Section */
@@ -17,6 +24,9 @@
     flex-wrap: wrap;
     gap: 20px; /* Space between cards */
     justify-content: center; /* Center the columns */
+    background-size: cover; /* Ensure the image covers the row */
+    background-position: center; /* Center the image in the row */
+    background-repeat: no-repeat; /* Prevent image repetition */
 }
 
 /* Blog Post Cards */

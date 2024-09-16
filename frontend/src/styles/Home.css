@@ -1,0 +1,236 @@
+/* General container for home page */
+.home-container {
+  font-family: 'Lora', serif;
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+/* Welcome Section (Already has a background image) */
+.welcome-section {
+  background-image: url(http://127.0.0.1:8000/media/Intro-section.jpeg);
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.welcome-title {
+  font-size: 4rem;
+  margin-bottom: 10px;
+  color: #0FA4AF;
+}
+
+.welcome-quote {
+  font-style: italic;
+  margin-bottom: 40px;
+  font-size: 1.8rem;
+  color: #0FA4AF;
+}
+
+.cta-button {
+  background-color: #964734;
+  color: #ffffff;
+  padding: 15px 30px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #003135;
+  transform: scale(1.05);
+}
+
+/* Creative Message Section */
+.creative-message-section {
+  background-image: url('http://127.0.0.1:8000/media/blog_section.jpg'); /* Replace with your image path */
+  background-size: cover; /* Ensure the image covers the entire section */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent repeating the image */
+  color: #FFFFFF; /* White text color to contrast with the background */
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+/* Services Section */
+.services-section {
+  background-color: #024950; /* Primary color for services */
+  color: #AFDDE5; /* Light color for contrast */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #AFDDE5; /* Light color for section title */
+}
+
+/* Card Deck - Horizontal Scroll */
+.card-deck {
+  display: flex;
+  flex-wrap: nowrap; /* Horizontal scrolling */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding: 10px;
+  gap: 20px; /* Space between cards */
+  scroll-snap-type: x mandatory; /* Smooth scrolling */
+  -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+}
+
+.card-deck::-webkit-scrollbar {
+  display: none; /* Hide scrollbar */
+}
+
+.service-card {
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+  padding: 20px;
+  border-radius: 10px;
+  color: #333;
+  margin: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 300px; /* Limit card width */
+  text-align: center;
+  scroll-snap-align: center; /* Center card on scroll */
+  border: 1px solid #0FA4AF; /* Optional border for more emphasis */
+}
+
+.service-card h3 {
+  color: #0FA4AF; /* Secondary color for service titles */
+}
+
+.service-card p {
+  color: #AFDDE5; /* Light color for text */
+}
+
+.service-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  background-color: #003135; /* Dark color for testimonials */
+  color: #AFDDE5;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.testimonials-section .section-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #AFDDE5; /* Light color for section title */
+}
+
+.testimonial-card {
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent white for contrast */
+  padding: 20px;
+  border-radius: 10px;
+  color: #AFDDE5;
+  margin: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 300px; /* Limit card width */
+  text-align: center;
+}
+
+.testimonial-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Blog Section */
+.blog-section {
+  background-color: #f4f4f4; /* Neutral background for blog */
+  color: #333; /* Darker text for better contrast */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.blog-section .section-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #964734; /* Accent color for section title */
+}
+
+.blog-card {
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+  padding: 20px;
+  border-radius: 10px;
+  color: #333;
+  margin: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 300px; /* Limit card width */
+  text-align: center;
+}
+
+.blog-card h3 {
+  color: #964734; /* Accent color for blog post titles */
+}
+
+.blog-card p {
+  color: #003135; /* Primary color for text */
+}
+
+.blog-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Contact Section */
+.contact-section {
+  background-color: #964734; /* Accent color for contact section */
+  color: #f8f8f8;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-section .section-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.cta-button {
+  background-color: #0FA4AF;
+  color: #ffffff;
+  padding: 15px 30px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-size: 15px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #003135;
+  transform: scale(1.05);
+}
+
+/* Fade effect for sections */
+.fade {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.fade.visible {
+  opacity: 1;
+}

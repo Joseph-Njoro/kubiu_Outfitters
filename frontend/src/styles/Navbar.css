@@ -1,30 +1,48 @@
 /* src/components/Navbar.css */
 
+/* Font Imports (if using Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Playfair+Display:wght@700&display=swap');
+
 /* Navbar Container */
+.navbar .container-fluid {
+  background-color: #05159e9d;
+}
+
+/* Navbar Styling */
 .navbar {
-  background-color: #065636; /* Even darker color for the navbar background */
-  border-bottom: 2px solid #0d1b2a; /* Darker border for definition */
+  border-bottom: 3px solid #0FA4AF; /* Secondary color for border with increased thickness */
+  font-family: 'Poppins', sans-serif; /* Luxurious font for the navbar */
 }
 
 /* Navbar Brand */
 .navbar-brand {
-  font-size: 1.5rem;
+  font-size: 1.75rem; /* Larger size for brand text */
   font-weight: bold;
-  color: #ecf0f1; /* Light color for brand text */
+  color: #173239; /* Light color for brand text */
 }
 
 .navbar-brand:hover {
-  color: #f39c12; /* Highlight color on hover */
+  color: #AFDDE5; /* Accent color on hover */
+  text-shadow: 1px 1px 3px rgba(255, 242, 5, 0.993); /* Subtle text shadow for a more refined look */
+}
+
+/* Navbar Links Container (push links to the right) */
+.navbar-nav {
+  margin-left: auto; /* Push navbar links to the right */
 }
 
 /* Navbar Links */
 .nav-link {
   color: #ecf0f1; /* Light color for nav links */
-  font-size: 1rem;
+  font-size: 1.1rem; /* Slightly larger size for readability */
+  padding: 0.5rem 1rem; /* Add padding for better click area */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for hover effects */
 }
 
 .nav-link:hover {
-  color: #f39c12; /* Highlight color on hover */
+  color: #AFDDE5; /* Accent color on hover */
+  background-color: rgba(0, 0, 0, 0.1); /* Subtle background color on hover */
+  border-radius: 4px; /* Rounded corners for hover effect */
 }
 
 /* Navbar Toggler Button */
@@ -46,17 +64,23 @@
   margin-left: 1rem;
 }
 
+/* User Welcome Text */
 .navbar-text {
   color: #ecf0f1; /* Light color for user welcome text */
+  font-size: 1.1rem; /* Slightly larger size for visibility */
+  font-family: 'Playfair Display', serif; /* Elegant font for user text */
 }
 
 /* Button Styling */
 .btn-outline-danger {
-  border-color: #e74c3c; /* Red border color */
-  color: #e74c3c; /* Red text color */
+  border-color: #AFDDE5; /* Accent color for border */
+  color: #AFDDE5; /* Accent color for text */
+  font-weight: 600; /* Bold text for buttons */
 }
 
 .btn-outline-danger:hover {
-  background-color: #e74c3c; /* Red background on hover */
+  background-color: #AFDDE5; /* Accent color on hover */
   color: #fff; /* White text color on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add depth on hover */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
 }

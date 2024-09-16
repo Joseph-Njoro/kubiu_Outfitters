@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './styles/custom.css';
 import './index.css'; // Import the global styles
+import './styles/Home.css'; // Import your CSS for the home page
+import './fadeEffect'; // Import the fade effect script
 
 // Get the root element
 const rootElement = document.getElementById('root');

@@ -6,9 +6,13 @@ const BlogPosts = () => {
     const [posts, setPosts] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [loading, setLoading] = useState(false); // Track loading state
+    const [error, setError] = useState(null); // Track error state
 
     // Fetch blog posts with pagination
     const fetchBlogPosts = useCallback(async (pageNumber) => {
+        setLoading(true); // Start loading
+        setError(null); // Reset error state
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/api/blogposts/?page=${pageNumber}`);
             if (!response.ok) {
@@ -25,7 +29,10 @@ const BlogPosts = () => {
 
             setHasMore(data.next !== null); // Set hasMore based on 'next' link
         } catch (error) {
+            setError(error.message); // Set error message
             console.error('An error occurred while fetching blog posts:', error);
+        } finally {
+            setLoading(false); // End loading
         }
     }, []);
 
@@ -36,7 +43,7 @@ const BlogPosts = () => {
 
     // Handle infinite scrolling
     const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || !hasMore) return;
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || !hasMore || loading) return;
         setPage(prevPage => prevPage + 1);
     };
 
@@ -44,7 +51,7 @@ const BlogPosts = () => {
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll]);
+    }, [handleScroll, hasMore, loading]);
 
     return (
         <div className="container mt-4">
@@ -53,7 +60,9 @@ const BlogPosts = () => {
                     <BlogPostCard key={post.id} post={post} />
                 ))}
             </div>
-            {!hasMore && <p>No more posts to load.</p>}
+            {loading && <p>Loading more posts...</p>} {/* Loading message */}
+            {error && <p className="error-message">{error}</p>} {/* Error message */}
+            {!hasMore && !loading && <p>No more posts to load.</p>}
         </div>
     );
 };

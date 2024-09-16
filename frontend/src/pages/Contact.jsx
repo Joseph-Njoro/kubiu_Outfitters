@@ -1,4 +1,3 @@
-// src/pages/Contact.jsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Contact.css';
@@ -60,7 +59,7 @@ const Contact = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-5 contact-container">
             <h2>Contact Us</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
