@@ -51,7 +51,7 @@ class Testimonial(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Testimonial by {self.user.username} (Rating: {self.rating})"
+        return f"Testimonial by {self.user.email} (Rating: {self.rating})"
 
     class Meta:
         indexes = [
