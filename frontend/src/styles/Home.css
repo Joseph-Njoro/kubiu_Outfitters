@@ -9,7 +9,7 @@
 
 /* Welcome Section (Already has a background image) */
 .welcome-section {
-  background-image: url(http://127.0.0.1:8000/media/Intro-section.jpeg);
+  background-image: url(http://127.0.0.1:8000/media/landing_page_background.png);
   background-size: cover;
   background-position: center;
   color: #ffffff;
@@ -54,7 +54,7 @@
 
 /* Creative Message Section */
 .creative-message-section {
-  background-image: url('http://127.0.0.1:8000/media/blog_section.jpg'); /* Replace with your image path */
+  background-image: url('http://127.0.0.1:8000/media/grey_section.jpg'); /* Replace with your image path */
   background-size: cover; /* Ensure the image covers the entire section */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent repeating the image */

@@ -29,7 +29,12 @@ const GalleryCarousel = () => {
                             src={image.image}
                             className="d-block w-100"
                             alt={image.description}
-                            style={{ objectFit: 'cover', height: '500px' }} // Ensures images cover the area and have a fixed height
+                            style={{
+                                objectFit: 'contain', // Maintain aspect ratio
+                                width: '100%', // Make the width 100% of the container
+                                maxHeight: '780px', // Specify the maximum height
+                                height: 'auto' // Allow height to auto adjust
+                            }}
                         />
                         <div
                             className="carousel-caption d-none d-md-block"
@@ -45,7 +50,6 @@ const GalleryCarousel = () => {
                         >
                             <h5 style={{ color: '#fff', fontSize: '1.5rem' }}>{image.title}</h5>
                             <p style={{ color: '#fff', fontSize: '1rem' }}>{image.description}</p>
-                            {/* Display tags if available */}
                             {image.tags && image.tags.length > 0 && (
                                 <div style={{ marginTop: '10px' }}>
                                     {image.tags.map((tag, tagIndex) => (
